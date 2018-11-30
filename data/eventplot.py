@@ -12,9 +12,6 @@ dimec.start()
 # make interactive
 fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
 plt.ion()
-plt.show()
-plt.pause(0.1)
-
 ax.axis('off')
 ax.set_aspect(1)
 ax.set_xlim([0, 2])
@@ -38,6 +35,9 @@ ax.text(0.75, 1.25, 'Load \nShedding', fontsize=18)
 ax.text(1.75, 1.25, 'Line \nTrip', fontsize=18)
 
 light_last = np.array([0, 0, 0])
+plt.show()
+plt.pause(0.1)
+
 
 while True:
     var = dimec.sync()
