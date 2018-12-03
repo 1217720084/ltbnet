@@ -77,7 +77,7 @@ class MiniPMU(object):
         self.reset_var()
 
         self.dimec = Dime(self.name, self.dime_address)
-        self.pmu = Pmu(ip=pmu_ip, port=pmu_port)
+        self.pmu = Pmu(ip=pmu_ip, port=pmu_port, pmu_id=pmu_idx[0])
 
     def reset_var(self, retain_data=False):
         """
