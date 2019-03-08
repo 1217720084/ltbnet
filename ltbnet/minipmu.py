@@ -500,7 +500,7 @@ def main():
     parser.add_argument('-n', '--name', default='MiniPMU',
                         help='PMU instance name', type=str)
     parser.add_argument('-a', '--dime_address',
-                        default='tcp://192.168.1.200:5000',
+                        default='ipc:///tmp/dime',
                         help='DiME server address')
     parser.add_argument('--fn', default=60,
                         help='nominal frequency (Hz)', type=int)
