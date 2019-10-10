@@ -109,7 +109,8 @@ class Network(Topo):
                 if region in self.Region.idx:
                     loc = self.Region.name.index(region)
                 else:
-                    log.error('Region <{r}> of {comp} <{name}> is undefined.'.format(r=region, comp=item, name=name))
+                    log.error('Region <{r}> of {comp} <{name}> is undefined.\n'.
+                              format(r=region, comp=item, name=name))
                     continue
 
                 self.Region.__dict__[item][loc].append(idx)
@@ -252,11 +253,6 @@ class Network(Topo):
                 writer.writerow(item)
 
 
-
-
-
-
-
 class Record(object):
     """Base class for config.csv records"""
     def __init__(self):
@@ -303,7 +299,7 @@ class Record(object):
         pmu_idx = None if PMU_IDX == 'None' else int(PMU_IDX)
 
         if idx in self.idx:
-            log.error('PMU Idx <{i}> conflict.'.format(i=idx))
+            log.error('PMU Idx <{i}> has conflict.\n'.format(i=idx))
 
         def to_type(var):
             """Helper function to convert field to a list or a None object """

@@ -46,9 +46,9 @@ def make_graph(network):
             node_size=sizes
             )
 
-    labels = {i: i for i in network.Switch.idx}
+    labels = {i: i for i in network.Switch.idx + network.PMU.idx}
 
-    nx.draw_networkx_labels(G, pos, labels, font_size=16, font_color='black')
+    nx.draw_networkx_labels(G, pos, labels, font_size=13, font_color='black')
 
     return G, pos
 
