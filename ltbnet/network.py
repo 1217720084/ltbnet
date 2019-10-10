@@ -211,36 +211,45 @@ class Network(Topo):
                 if intf_instance.name == 'lo':
                     continue  # skip the loop-back interface
 
-                if intf_instance.link is None:
-                    print('***Warning: Intf_id <{}> has no instance'.format(intf_id))
-                    continue
+                if intf_instance.link is not None:
+                    # print('***Warning: Intf_id <{}> has no instance'.format(intf_id))
 
-                link1 = intf_instance.link.intf1
-                link2 = intf_instance.link.intf2
+                    link1 = intf_instance.link.intf1
+                    link2 = intf_instance.link.intf2
 
-                if any([link1, link2]) is None:
-                    continue
+                    if any([link1, link2]) is None:
+                        continue
 
-                source_intf_name = None
-                target_intf = None
-                if sw_id in link1.name:
-                    source_intf_name = link1.name
-                    target_intf = link2
-                elif sw_id in link2.name:
-                    source_intf_name = link2.name
-                    target_intf = link1
+                    source_intf_name = None
+                    target_intf = None
+                    if sw_id in link1.name:
+                        source_intf_name = link1.name
+                        target_intf = link2
+                    elif sw_id in link2.name:
+                        source_intf_name = link2.name
+                        target_intf = link1
 
-                assert target_intf is not None
+                    assert target_intf is not None
 
-                target_intf_name = target_intf.name
-                target_name = target_intf.node.name
+                    target_intf_name = target_intf.name
+                    target_name = target_intf.node.name
+                else:  # HwIntf or TCHwIntf
+                    hw_intf_name = intf_instance.name
+                    source_intf_name = hw_intf_name
+                    target_intf_name = hw_intf_name
+                    if self.TCHwIntf.lookup_name(hw_intf_name) != -1:
+                        target_name = self.TCHwIntf.idx[self.TCHwIntf.lookup_name(hw_intf_name)]
+                    elif self.HwIntf.lookup_name(hw_intf_name) != -1:
+                        target_name = self.HwIntf.idx[self.HwIntf.lookup_name(hw_intf_name)]
+                    else:
+                        raise KeyError("interface {} not found".format(hw_intf_name))
 
                 idx_list.append(idx)
                 sw_list.append(sw_name)
                 sw_id_list.append(sw_id)
                 sw_mac_list.append(sw_mac)
-                sw_intf_name_list.append(source_intf_name)
                 sw_intf_id_list.append(intf_id)
+                sw_intf_name_list.append(source_intf_name)
                 target_intf_name_list.append(target_intf_name)
                 target_node_name_list.append(target_name)
 
@@ -347,6 +356,13 @@ class Record(object):
         if idx not in records:
             return -1
         return records.index(idx)
+
+    def lookup_name(self, name):
+        """Return the numerical index of the element with name equal the provided name"""
+        if name not in self.name:
+            return -1
+
+        return self.name.index(name)
 
     def dump(self):
         """Return a string of the dumped records in csv format"""
