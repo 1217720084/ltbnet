@@ -13,6 +13,7 @@ setup(name='ltbnet',
           'console_scripts': [
               'ltbnet = ltbnet.main:main',
               'minipmu = ltbnet.minipmu:main',
+              'attack = ltbnet.attack:main'
           ]
       },
       )

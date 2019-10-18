@@ -451,6 +451,25 @@ class PMU(Record):
             log.info('{name} idx={idx} started\n'.format(name=pmu_name, idx=pmu_idx))
             time.sleep(0.02)
 
+    def scapy_attack(self, network, target_ip):
+        """
+        Implements a scapy-based attack to the target address
+        :param network: Mininet object
+        :param target_ip: target IP address
+        :return: None
+        """
+        pass
+
+        # pipe the code
+        for i in range(self.n):
+            name = self.mn_name[i]
+            node = network.get(name)
+
+            # if i == 0:
+            #     node.popen("wireshark")
+
+            node.popen("/home/ltbnet/miniconda3/bin/attack {}".format(target_ip))
+
 
 class PDC(Record):
     """Data streaming PDC class"""

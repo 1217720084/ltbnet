@@ -27,6 +27,7 @@ def main(*args, **kwargs):
                         help='enable INFO level verbose logging')
     parser.add_argument('--runpmu', help='run LTBPMU processes on the specified PMU hosts',
                         action='store_true')
+    parser.add_argument('--attack', help='attack the specified ip address using scapy')
     parser.add_argument('--graph', help='show graph visualization', action='store_true')
     parser.add_argument('--source_node', help='name of the source node')
     parser.add_argument('--target_node', help='name of the destination node')
@@ -79,6 +80,10 @@ def main(*args, **kwargs):
     print('LTBNet Ready')
     if cli_args.runpmu:
         network.PMU.run_pmu(net)
+    # scapy attack
+    if cli_args.attack:
+        network.PMU.scapy_attack(net, cli_args.attack)
+
     CLI(net)
 
     print('Stopping MiniPMUs - enter your root password if prompted')
